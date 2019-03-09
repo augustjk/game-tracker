@@ -12,8 +12,8 @@ class FrontContainer extends Component {
       p1name: 'Michael',
       p2name: 'Augustine',
       gameState: 0,
-      p1score: 0,
-      p2score: 0,
+      p1Score: [0],
+      p2Score: [0],
       serving: 1,
       maxScore: 21,
       endGameChoice: null,
@@ -23,6 +23,15 @@ class FrontContainer extends Component {
     this.startMatch = this.startMatch.bind(this);
     this.setMaxScore = this.setMaxScore.bind(this);
     this.setServing = this.setServing.bind(this);
+    this.handleScoreButton = this.handleScoreButton.bind(this);
+  }
+  
+  componentDidMount() {
+    axios.post('/action', {action: 'GET_STATE'})
+    .then(res=>{
+      this.setState(res.data);
+    })
+    .catch(err=>console.error(err));
   }
 
   setP1Name(e) {
@@ -72,8 +81,23 @@ class FrontContainer extends Component {
     .catch(err=>console.error(err));
   }
 
-  componentDidMount() {
-    axios.post('/action', {action: 'GET_STATE'})
+  handleScoreButton(e) {
+    const body = {};
+    switch(e.target.id) {
+      case 'inc-p1':
+        body.action = 'INCREMENT';
+        body.payload = {player: 1};
+        break;
+      case 'inc-p2':
+        body.action = 'INCREMENT';
+        body.payload = {player: 2};
+        break;
+      case 'undo':
+        body.action = 'UNDO';
+        break;
+    }
+
+    axios.post('/action', body)
     .then(res=>{
       this.setState(res.data);
     })
@@ -95,7 +119,14 @@ class FrontContainer extends Component {
           setServing={this.setServing}
           />) ;
       case 1:
-       return (<PlayingContainer />);
+       return (<PlayingContainer
+        p1name={this.state.p1name}
+        p2name={this.state.p2name}
+        serving={this.state.serving}
+        p1Score={this.state.p1Score}
+        p2Score={this.state.p2Score}
+        handleScoreButton={this.handleScoreButton}
+         />);
       case 2:
         return (<EndGameContainer />);
       default:
