@@ -1,4 +1,5 @@
 const GameManager = require('../managers/gameManager');
+const PlayerQueue = require('../managers/queueManager');
 const action = require('../constants/actionTypes');
 const { defaultGameState } = require('../constants/defaults');
 
@@ -52,7 +53,8 @@ module.exports = {
         break;
       }
       case action.ENQUEUE: {
-        //
+        res.json(PlayerQueue.enqueue(response.payload));
+        break;
       }
       default: {
         res.status(401).send('bad action body');

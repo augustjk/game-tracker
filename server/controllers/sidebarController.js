@@ -1,3 +1,5 @@
+const PlayerQueue = require('../managers/queueManager');
+
 module.exports = {
   getData: (req, res) => {
     // type of the query will either be 'ranking' or 'queue'
@@ -6,7 +8,7 @@ module.exports = {
     if (requestType === 'ranking') {
       //
     } else if (requestType === 'queue') {
-      //
+      res.json(PlayerQueue.getQueue());
     } else {
       res.status(401).send('Incorrect Request Type');
     }
