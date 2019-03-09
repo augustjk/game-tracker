@@ -4,7 +4,7 @@ module.exports = {
   mode: process.env.NODE_ENV,
   entry: './client/index.jsx',
   devServer: {
-    contentBase: path.resolve(__dirname),
+    contentBase: path.resolve(__dirname, './client'),
     publicPath: '/build/',
     proxy: {
       '/api': 'http://localhost:3000'
