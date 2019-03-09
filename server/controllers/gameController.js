@@ -10,7 +10,7 @@ module.exports = {
         //
         break;
       }
-      case action.START: {
+      case 'START': {
         // do start logic
         console.log('inside START case');
         const initConfig = response.payload;

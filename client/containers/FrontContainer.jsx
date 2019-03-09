@@ -55,10 +55,13 @@ class FrontContainer extends Component {
 
   startMatch() {
     const body = {
-      p1: this.state.p1name,
-      p2: this.state.p2name,
-      maxScore: this.state.maxScore,
-      serving: this.state.serving,
+      action: 'START',
+      payload: {
+        p1name: this.state.p1name,
+        p2name: this.state.p2name,
+        maxScore: this.state.maxScore,
+        serving: this.state.serving,
+      }
     }
     axios.post('/action', body)
     .then(res=>{
