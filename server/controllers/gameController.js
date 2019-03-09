@@ -46,6 +46,12 @@ module.exports = {
         }
         break;
       }
+      case action.ENQUEUE: {
+        //
+      }
+      default: {
+        res.status(401).send('bad action body');
+      }
     }
   }
 };
