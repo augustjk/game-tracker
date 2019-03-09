@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
   res.sendFile(path.resolve(__dirname, '../client/index.html'));
 });
 
-// app.get('/sidebar', sidebarController);
+app.get('/sidebar', sidebarController.getData);
 
 app.post('/action', gameController.handleResponse);
 

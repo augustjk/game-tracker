@@ -7,16 +7,15 @@ module.exports = {
     const response = req.body;
     switch (response.action) {
       case action.GET_STATE: {
-        //
+        const currentGame = GameManager.getGame();
+        if (currentGame) {
+          res.json(currentGame.gameState);
+        } else {
+          res.json(defaultGameState);
+        }
         break;
       }
-<<<<<<< HEAD
-      case 'START': {
-        // do start logic
-        console.log('inside START case');
-=======
       case action.START: {
->>>>>>> 55200701b418ca731e006bc0ce29e376174f0017
         const initConfig = response.payload;
         const currentGame = GameManager.createGame(initConfig);
         res.json(currentGame.gameState);
