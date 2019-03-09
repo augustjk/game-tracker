@@ -46,6 +46,9 @@ class GameSession {
   }
 
   incrementScore(payload) {
+    if (this.gameState.gameState == 2) {
+      return this.gameState;
+    }
     const player = payload.player;
     const p1Score = this.gameState.p1Score;
     const p2Score = this.gameState.p2Score;
@@ -54,27 +57,36 @@ class GameSession {
     if (player === 1) {
       p1Score.push(p1Score[len - 1] + 1);
       p2Score.push(p2Score[len - 1]);
-    } else {
+    } else if (player === 2) {
       p1Score.push(p1Score[len - 1]);
       p2Score.push(p2Score[len - 1] + 1);
     }
+
+    this.didPlayerWin();
     // need to determine if there is a winner after the increment. if there is, game state needs to change
     return this.gameState;
   }
 
-  undo(payload) {
-    const player = payload.player;
+  didPlayerWin() {
+    const p1Score = this.gameState.p1Score[this.gameState.p1Score.length - 1];
+    const p2Score = this.gameState.p2Score[this.gameState.p2Score.length - 1];
+    const maxScore = this.gameState.maxScore;
+    if (
+      (p1Score >= maxScore || p2Score >= maxScore) &&
+      Math.abs(p1Score - p2Score) >= 2
+    ) {
+      this.gameState.gameState = 2;
+      return true;
+    }
+    return false;
+  }
+
+  undo() {
     const p1Score = this.gameState.p1Score;
     const p2Score = this.gameState.p2Score;
-    const len = p1Score.length;
 
-    if (player === 1) {
-      p1Score.pop();
-      p2Score.pop();
-    } else {
-      p1Score.pop();
-      p2Score.pop();
-    }
+    p1Score.pop();
+    p2Score.pop();
     return this.gameState;
   }
 
