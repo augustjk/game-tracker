@@ -25,7 +25,7 @@ class GameSession {
       gameState: 1, // 0: no game. 1: in progress. 2: game end
       p1Score: [0],
       p2Score: [0],
-      serving: initialConfig.serving,
+      serving: [initialConfig.serving],
       maxScore: initialConfig.maxScore,
       endGameChoice: undefined
     };
@@ -63,8 +63,22 @@ class GameSession {
     }
 
     this.didPlayerWin();
+    this.determineServer();
     // need to determine if there is a winner after the increment. if there is, game state needs to change
     return this.gameState;
+  }
+
+  determineServer() {
+    const len = this.gameState.serving.length;
+    const currServer = this.gameState.serving[len - 1];
+    const serveInterval = this.gameState.maxScore === 21 ? 5 : 2;
+    if (len % serveInterval === 0) {
+      currServer === 1
+        ? this.gameState.serving.push(2)
+        : this.gameState.serving.push(1);
+    } else {
+      this.gameState.serving.push(this.gameState.serving[len - 1]);
+    }
   }
 
   didPlayerWin() {
@@ -84,9 +98,10 @@ class GameSession {
   undo() {
     const p1Score = this.gameState.p1Score;
     const p2Score = this.gameState.p2Score;
-
+    const serving = this.gameState.serving;
     p1Score.pop();
     p2Score.pop();
+    serving.pop();
     return this.gameState;
   }
 
