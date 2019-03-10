@@ -7,7 +7,8 @@ module.exports = {
     contentBase: path.resolve(__dirname, './client'),
     publicPath: '/build/',
     proxy: {
-      '/action': 'http://localhost:3000'
+      '/action': 'http://localhost:3000',
+      '/sidebar': 'http://localhost:3000'
     }
   },
   output: {
