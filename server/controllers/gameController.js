@@ -42,7 +42,7 @@ module.exports = {
           res.json(defaultGameState);
         } else if (restartType === 1) {
           const winner = GameManager.getGame().getWinner();
-          let winnerState = { ...defaultGameState, p1name: winner };
+          let winnerState = { ...defaultGameState, p1name: winner, p2name: '' };
           // winnerState.p1name = winner;
           res.json(winnerState);
         } else {
