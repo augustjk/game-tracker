@@ -7,6 +7,6 @@ module.exports = {
     resBody.queue = PlayerQueue.getQueue();
     // need to implement the data base
     res.json(resBody);
-    res.status(401).send('Incorrect Request Type');
+    // res.status(401).send('Incorrect Request Type');
   }
 };
