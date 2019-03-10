@@ -111,6 +111,10 @@ class GameSession {
     this.gameState.p2Score = [0];
     return this.gameState;
   }
+
+  setNewGameState(newState) {
+    this.gameState = {...newState}
+  }
 }
 
 module.exports = new GameManager();

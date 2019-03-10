@@ -36,29 +36,30 @@ module.exports = {
       }
       case action.RESTART: {
         const restartType = response.payload;
-
         if (restartType === 0) {
           // if both leave
           GameManager.endGame();
-          res.json({
+          const newState = {
             ...defaultGameState,
             p1Name: PlayerQueue.dequeue() || '',
-            p2Name: PlayerQueue.dequeue() || ''
-          });
+            p2Name: PlayerQueue.dequeue() || '',
+          }
+          GameManager.getGame().setNewGameState(newState);
+          res.json(newState);
         } else if (restartType === 1) {
+          // winner stay
           const winner = GameManager.getGame().getWinner();
-
-          let winnerState = {
+          const newState = {
             ...defaultGameState,
             p1name: winner,
-            p2name: PlayerQueue.dequeue() || ''
+            p2name:PlayerQueue.dequeue() || ''
           };
-          // winnerState.p1name = winner;
-          res.json(winnerState);
+          GameManager.getGame().setNewGameState(newState);
+          res.json(newState);
         } else {
+          // rematch
           const restartedGameState = GameManager.getGame().restart();
           res.json(restartedGameState);
-          // res.json(GameManager.getGame().gameState);
         }
         break;
       }
