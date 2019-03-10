@@ -13,7 +13,7 @@ const NoGameContainer = props => {
     <div className="form-container">
       <div id="name-input-wrapper">
         <div className="name-input">
-          <MDBContainer className="mt-5">
+          <MDBContainer>
             <MDBInput
               id="p1name"
               name="p1name"
@@ -32,49 +32,49 @@ const NoGameContainer = props => {
               label="Enter Player 2 Name"
               onChange={props.setP2Name}
             />
+            <div id="radio-wrapper">
+              <div className="radio">
+                <p>Match Point</p>
+                <input
+                  type="radio"
+                  id="21-point"
+                  name="match-point"
+                  defaultChecked
+                  onClick={props.setMaxScore}
+                />
+                <label htmlFor="21-point">21</label>
+                <input
+                  type="radio"
+                  id="11-point"
+                  name="match-point"
+                  onClick={props.setMaxScore}
+                />
+                <label htmlFor="11-point">11</label>
+              </div>
+
+              <div className="radio">
+                <p>First Serve</p>
+                <input
+                  type="radio"
+                  id="p1-serve"
+                  name="first-serve"
+                  defaultChecked
+                  onClick={props.setServing}
+                />
+                <label htmlFor="p1-serve">Player 1</label>
+                <input
+                  type="radio"
+                  id="p2-serve"
+                  name="first-serve"
+                  onClick={props.setServing}
+                />
+                <label htmlFor="p2-serve">Player 2</label>
+              </div>
+            </div>
           </MDBContainer>
         </div>
       </div>
 
-      <div id="radio-wrapper">
-        <div className="radio">
-          <p>Match Point</p>
-          <input
-            type="radio"
-            id="21-point"
-            name="match-point"
-            defaultChecked
-            onClick={props.setMaxScore}
-          />
-          <label htmlFor="21-point">21</label>
-          <input
-            type="radio"
-            id="11-point"
-            name="match-point"
-            onClick={props.setMaxScore}
-          />
-          <label htmlFor="11-point">11</label>
-        </div>
-
-        <div className="radio">
-          <p>First Serve</p>
-          <input
-            type="radio"
-            id="p1-serve"
-            name="first-serve"
-            defaultChecked
-            onClick={props.setServing}
-          />
-          <label htmlFor="p1-serve">Player 1</label>
-          <input
-            type="radio"
-            id="p2-serve"
-            name="first-serve"
-            onClick={props.setServing}
-          />
-          <label htmlFor="p2-serve">Player 2</label>
-        </div>
-      </div>
       <ButtonToolbar>
         <Button
           variant="outline-primary"
