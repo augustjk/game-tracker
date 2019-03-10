@@ -4,9 +4,9 @@ class PlayerQueue {
   }
 
   enqueue(name) {
-    console.log('adding a person to the queue');
+    // console.log('adding a person to the queue');
     this.queue.push(name);
-    console.log('after adding: ', this.queue);
+    // console.log('after adding: ', this.queue);
     return this.queue;
   }
 

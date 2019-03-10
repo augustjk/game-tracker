@@ -24,7 +24,11 @@ class SideContainer extends Component {
    }
    axios.post('/action', body)
     .then(res => {
-      this.setState({queue: res.data});
+      console.log(res.data);
+      this.setState({
+        queue: res.data,
+        queueInput: '',
+      });
     })
     .catch(err => console.log(err))
  }
