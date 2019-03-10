@@ -38,11 +38,21 @@ module.exports = {
         const restartType = response.payload;
 
         if (restartType === 0) {
+          // if both leave
           GameManager.endGame();
-          res.json(defaultGameState);
+          res.json({
+            ...defaultGameState,
+            p1Name: PlayerQueue.dequeue() || '',
+            p2Name: PlayerQueue.dequeue() || ''
+          });
         } else if (restartType === 1) {
           const winner = GameManager.getGame().getWinner();
-          let winnerState = { ...defaultGameState, p1name: winner, p2name: '' };
+
+          let winnerState = {
+            ...defaultGameState,
+            p1name: winner,
+            p2name: PlayerQueue.dequeue() || ''
+          };
           // winnerState.p1name = winner;
           res.json(winnerState);
         } else {
