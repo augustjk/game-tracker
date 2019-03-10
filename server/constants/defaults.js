@@ -4,8 +4,8 @@ const defaultGameState = {
   gameState: 0,
   p1Score: [0],
   p2Score: [0],
-  serving: null,
-  maxScore: null,
+  serving: 1,
+  maxScore: 21,
   endGameChoice: null
 };
 

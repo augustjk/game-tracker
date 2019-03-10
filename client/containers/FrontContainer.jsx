@@ -14,7 +14,7 @@ class FrontContainer extends Component {
       gameState: 0,
       p1Score: [0],
       p2Score: [0],
-      serving: 1,
+      serving: [],
       maxScore: 21,
       endGameChoice: null,
     }
@@ -24,6 +24,7 @@ class FrontContainer extends Component {
     this.setMaxScore = this.setMaxScore.bind(this);
     this.setServing = this.setServing.bind(this);
     this.handleScoreButton = this.handleScoreButton.bind(this);
+    this.handleEndGame = this.handleEndGame.bind(this);
   }
   
   componentDidMount() {
@@ -104,6 +105,27 @@ class FrontContainer extends Component {
     .catch(err=>console.error(err));
   }
 
+  handleEndGame(e) {
+    const body = {action: 'RESTART'};
+    switch(e.target.id) {
+      case 'rematch':
+        body.payload = 2;
+        break;
+      case 'winner-stay':
+        body.payload = 1;
+        break;
+      case 'both-leave':
+        body.payload = 0;
+        break;
+    }
+
+    axios.post('/action', body)
+    .then(res=>{
+      this.setState(res.data);
+    })
+    .catch(err=>console.error(err));
+  }
+
   render() {
     switch (this.state.gameState) {
       case 0:
@@ -120,15 +142,21 @@ class FrontContainer extends Component {
           />) ;
       case 1:
        return (<PlayingContainer
-        p1name={this.state.p1name}
-        p2name={this.state.p2name}
-        serving={this.state.serving}
-        p1Score={this.state.p1Score}
-        p2Score={this.state.p2Score}
-        handleScoreButton={this.handleScoreButton}
+          p1name={this.state.p1name}
+          p2name={this.state.p2name}
+          serving={this.state.serving}
+          p1Score={this.state.p1Score}
+          p2Score={this.state.p2Score}
+          handleScoreButton={this.handleScoreButton}
          />);
       case 2:
-        return (<EndGameContainer />);
+        return (<EndGameContainer
+          p1name={this.state.p1name}
+          p2name={this.state.p2name}
+          p1Score={this.state.p1Score}
+          p2Score={this.state.p2Score}
+          handleEndGame={this.handleEndGame}
+        />);
       default:
         return null;
     }

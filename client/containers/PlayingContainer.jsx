@@ -9,7 +9,7 @@ const PlayingContainer = (props) => {
         <p id="colon">:</p>
         <p id="p2score">{props.p2Score[props.p2Score.length-1]}</p>
 
-        <p id={`serve${props.serving}`}>&#8595;</p>
+        <p id={`serve${props.serving[props.serving.length-1]}`}>&#8595;</p>
 
         <p id="p1-display-name">{props.p1name}</p>
         <p id="p2-display-name">{props.p2name}</p>
