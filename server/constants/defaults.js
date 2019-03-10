@@ -1,12 +1,12 @@
 const defaultGameState = {
-  p1name: undefined,
-  p2name: undefined,
+  p1name: '',
+  p2name: '',
   gameState: 0,
   p1Score: [0],
   p2Score: [0],
-  serving: undefined,
-  maxScore: undefined,
-  endGameChoice: undefined
+  serving: null,
+  maxScore: null,
+  endGameChoice: null
 };
 
 module.exports = { defaultGameState };
