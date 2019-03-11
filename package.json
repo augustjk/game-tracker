@@ -7,7 +7,7 @@
     "build": "export NODE_ENV=production; webpack",
     "start": "export NODE_ENV=production; node server/server.js",
     "dev": "concurrently \"export NODE_ENV=development; webpack-dev-server --open\" \"export NODE_ENV=development; nodemon server/server.js\"",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -31,12 +31,16 @@
     "css-loader": "^2.1.1",
     "dotenv": "^6.2.0",
     "express": "^4.16.4",
+    "jest": "^24.3.1",
+    "mdbreact": "^4.11.0",
     "nodemon": "^1.18.10",
     "pg": "^7.8.2",
     "react": "^16.8.4",
+    "react-bootstrap": "^1.0.0-beta.5",
     "react-dom": "^16.8.4",
     "react-router-dom": "^4.3.1",
     "style-loader": "^0.23.1",
+    "victory": "^32.0.0",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.2.1"

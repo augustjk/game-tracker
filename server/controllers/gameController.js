@@ -38,13 +38,14 @@ module.exports = {
         const restartType = response.payload;
         if (restartType === 0) {
           // if both leave
-          GameManager.endGame();
+          // GameManager.endGame();
           const newState = {
             ...defaultGameState,
-            p1Name: PlayerQueue.dequeue() || '',
-            p2Name: PlayerQueue.dequeue() || '',
-          }
+            p1name: PlayerQueue.dequeue() || '',
+            p2name: PlayerQueue.dequeue() || ''
+          };
           GameManager.getGame().setNewGameState(newState);
+
           res.json(newState);
         } else if (restartType === 1) {
           // winner stay
@@ -52,7 +53,7 @@ module.exports = {
           const newState = {
             ...defaultGameState,
             p1name: winner,
-            p2name:PlayerQueue.dequeue() || ''
+            p2name: PlayerQueue.dequeue() || ''
           };
           GameManager.getGame().setNewGameState(newState);
           res.json(newState);

@@ -113,7 +113,7 @@ class GameSession {
   }
 
   setNewGameState(newState) {
-    this.gameState = {...newState}
+    this.gameState = { ...newState };
   }
 }
 
