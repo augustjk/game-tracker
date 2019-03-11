@@ -22,6 +22,7 @@ const NoGameContainer = props => {
               // placeholder="Enter Name"
               label="Enter Player 1 Name"
               onChange={props.setP1Name}
+              autocomplete="off"
             />
             <MDBInput
               id="p2name"
@@ -31,10 +32,11 @@ const NoGameContainer = props => {
               // placeholder="Enter Name"
               label="Enter Player 2 Name"
               onChange={props.setP2Name}
+              autocomplete="off"
             />
             <div id="radio-wrapper">
               <div className="radio">
-                <p>Match Point</p>
+                <p id="match-point-text">Match Point</p>
                 <input
                   type="radio"
                   id="21-point"
@@ -53,7 +55,7 @@ const NoGameContainer = props => {
               </div>
 
               <div className="radio">
-                <p>First Serve</p>
+                <p id="first-serve-text">First Serve</p>
                 <input
                   type="radio"
                   id="p1-serve"
@@ -74,7 +76,6 @@ const NoGameContainer = props => {
           </MDBContainer>
         </div>
       </div>
-
       <ButtonToolbar>
         <Button
           variant="outline-primary"
@@ -84,6 +85,7 @@ const NoGameContainer = props => {
           Start
         </Button>
       </ButtonToolbar>
+
       {/* <button id="start-button" onClick={props.startMatch}> */}
       {/* Start */}
       {/* </button> */}
