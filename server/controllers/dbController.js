@@ -2,7 +2,7 @@ const db = require('./dbModel');
 
 module.exports = {
   handleDBRequest: (winner, loser) => {
-    console.log(winner, loser);
+    // console.log(winner, loser);
     // need to check if winner and loser exists. if they do, update their stats, if they don't
     // add them to the database for the first time
     // db.query('do query here');
@@ -23,6 +23,16 @@ module.exports = {
       .catch(() => {
         addNewUser(loser, false);
       });
+  },
+
+  getDBList: () => {
+    return new Promise((resolve, reject) => {
+      db.query(`SELECT * from stats_database`)
+      .then(dbRes => {
+        resolve(dbRes.rows);
+      })
+      .catch(err => console.error(err));
+    });
   }
 };
 

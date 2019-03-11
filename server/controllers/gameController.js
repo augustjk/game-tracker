@@ -113,7 +113,10 @@ module.exports = {
         const newQueue = PlayerQueue.enqueue(response.payload);
         socketCollection.forEach((ws)=>{
           if (ws.readyState === 1) {
-            ws.send(JSON.stringify(newQueue));
+            ws.send(JSON.stringify({
+              sidebar: true,
+              queue: newQueue
+            }));
           }
         });
         res.json(newQueue);
