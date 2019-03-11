@@ -31,11 +31,10 @@ app.post('/action', gameController.handleResponse);
 
 app.ws('/ws', (ws, req) => {
   // ws.send('hello from server');
-})
+});
 
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
-
 
 module.exports = expressWs;
