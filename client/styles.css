@@ -101,3 +101,7 @@ body {
 #radio-wrapper {
   text-align: center;
 }
+
+#graph-wrapper {
+  width: 25%;
+}

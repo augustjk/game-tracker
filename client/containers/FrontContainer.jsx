@@ -154,6 +154,7 @@ class FrontContainer extends Component {
             serving={this.state.serving}
             p1Score={this.state.p1Score}
             p2Score={this.state.p2Score}
+            maxScore={this.state.maxScore}
             handleScoreButton={this.handleScoreButton}
           />
         );
