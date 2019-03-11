@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { VictoryChart, VictoryLine, VictoryTheme } from 'victory';
+import { VictoryChart, VictoryLine, VictoryTheme, VictoryAxis } from 'victory';
 
 const PlayingContainer = props => {
   const { p1Score, p2Score } = props;
@@ -16,7 +16,8 @@ const PlayingContainer = props => {
     p1Score[p1Score.length - 1],
     p2Score[p2Score.length - 1]
   );
-  maxY = playerMaxScore >= props.maxScore ? maxScore + 2 : props.maxScore + 2;
+  maxY =
+    playerMaxScore >= props.maxScore ? playerMaxScore + 2 : props.maxScore + 2;
 
   return (
     <div>
@@ -32,22 +33,42 @@ const PlayingContainer = props => {
       </div>
       <div id="graph-wrapper">
         <VictoryChart
-          theme={VictoryTheme.material}
+          // theme={VictoryTheme.material}
+          style={{}}
           maxDomain={{ y: maxY, x: maxX }}
         >
           {/* <line /> */}
           <VictoryLine
             data={transformedP1Score}
             style={{
-              data: { stroke: 'blue' },
+              data: { stroke: '#efc170' },
               parent: { border: '1px solid blue' }
             }}
           />
           <VictoryLine
             data={transformedP2Score}
             style={{
-              data: { stroke: '#c43a31' },
+              data: { stroke: '#bc8ada' },
               parent: { border: '1px solid #ccc' }
+            }}
+          />
+          <VictoryAxis
+            dependentAxis
+            label="points"
+            style={{
+              axis: { stroke: 'white' },
+              axisLabel: { stroke: 'white' },
+              tickLabels: { stroke: 'white' },
+              ticks: { stroke: 'white' }
+            }}
+          />
+          <VictoryAxis
+            label="rounds"
+            style={{
+              axis: { stroke: 'white' },
+              axisLabel: { stroke: 'white' },
+              tickLabels: { stroke: 'white' },
+              ticks: { stroke: 'white' }
             }}
           />
         </VictoryChart>
@@ -60,7 +81,7 @@ const PlayingContainer = props => {
           +
         </button>
         <button id="undo" onClick={props.handleScoreButton}>
-          Undo
+          UNDO
         </button>
       </div>
     </div>

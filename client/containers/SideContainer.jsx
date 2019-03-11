@@ -10,16 +10,9 @@ class SideContainer extends Component {
     this.state = {
       sidebarState: 0,
       queue: [],
-      ranking: [
-        { username: 'Micahel', wins: 30, losses: 23 },
-        {
-          username: 'Bob',
-          wins: 15,
-          losses: 32
-        }
-      ],
+      ranking: [],
       queueInput: '',
-      key: 'ranking'
+      key: 'queue'
     };
     this.enqueue = this.enqueue.bind(this);
     this.queueOnChange = this.queueOnChange.bind(this);
@@ -58,7 +51,11 @@ class SideContainer extends Component {
     this.props.ws.onmesage = e => {
       const parsed = JSON.parse(e.data);
       if (parsed.sidebar) {
+        // parsed = { sidebar: boolean , ranking: [], queue: []}
+        console.log(parsed);
         // then setState of the queue and ranking
+        delete parsed.sidebar;
+        this.setState(parsed);
       }
     };
   }
@@ -70,6 +67,9 @@ class SideContainer extends Component {
         activeKey={this.state.key}
         onSelect={key => this.setState({ key })}
       >
+        <Tab eventKey="ranking" title="Ranking">
+          <RankingComponent ranking={this.state.ranking} />
+        </Tab>
         <Tab eventKey="queue" title="Queue">
           <QueueComponent
             queue={this.state.queue}
@@ -77,9 +77,6 @@ class SideContainer extends Component {
             queueOnChange={this.queueOnChange}
             enqueue={this.enqueue}
           />
-        </Tab>
-        <Tab eventKey="ranking" title="Ranking">
-          <RankingComponent ranking={this.state.ranking} />
         </Tab>
       </Tabs>
     );
