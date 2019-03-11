@@ -1,4 +1,5 @@
-const { handleDBRequest } = require('../controllers/dbController');
+const { handleDBRequest, getDBList } = require('../controllers/dbController');
+const socketCollection = require('../socketCollection');
 
 class GameManager {
   constructor() {
@@ -73,14 +74,38 @@ class GameSession {
   determineServer() {
     const len = this.gameState.serving.length;
     const currServer = this.gameState.serving[len - 1];
-    const serveInterval = this.gameState.maxScore === 21 ? 5 : 2;
-    if (len % serveInterval === 0) {
-      currServer === 1
-        ? this.gameState.serving.push(2)
-        : this.gameState.serving.push(1);
+
+    const p1Score = this.gameState.p1Score[this.gameState.p1Score.length - 1];
+    const p2Score = this.gameState.p2Score[this.gameState.p2Score.length - 1];
+    const maxScore = this.gameState.maxScore;
+
+    if (
+      (p1Score + 1 >= maxScore && Math.abs(p1Score + 1 - p2Score) >= 2)
+    ) {
+      // p1 is about to win
+      this.gameState.serving.push(2);
+    } else if (
+      (p2Score + 1 >= maxScore && Math.abs(p1Score - (p2Score + 1)) >= 2)
+    ) {
+      // p2 is about to win
+      this.gameState.serving.push(1);
+    } else if (p1Score + 1 >= maxScore && p2Score + 1 >= maxScore) {
+      // entering deuce state
+      // the one catching up should keep serve
+      this.gameState.serving.push(currServer === 1 ? 1 : 2);
     } else {
-      this.gameState.serving.push(this.gameState.serving[len - 1]);
+      // regular serving determination
+      const serveInterval = this.gameState.maxScore === 21 ? 5 : 2;
+      if (len % serveInterval === 0) {
+        currServer === 1
+          ? this.gameState.serving.push(2)
+          : this.gameState.serving.push(1);
+      } else {
+        this.gameState.serving.push(this.gameState.serving[len - 1]);
+      }
     }
+
+    
   }
 
   didPlayerWin() {
@@ -101,7 +126,18 @@ class GameSession {
           ? this.gameState.p2name
           : this.gameState.p1name;
       handleDBRequest(winner, loser);
-
+      getDBList()
+      .then(resp => {
+        const resBody = {
+          sidebar: true,
+          ranking: resp
+        }
+        socketCollection.forEach((ws)=>{
+          if (ws.readyState === 1) {
+            ws.send(JSON.stringify(resBody));
+          }
+        });
+      });
       return true;
     }
     return false;
