@@ -34,6 +34,16 @@ class FrontContainer extends Component {
         this.setState(res.data);
       })
       .catch(err => console.error(err));
+    
+    this.props.ws.onopen = () => {
+      console.log('ws connection open');
+    }
+
+    this.props.ws.onmessage = (e) => {
+      console.log('client message:', e.data);
+      this.setState(JSON.parse(e.data));
+    }
+
   }
 
   setP1Name(e) {

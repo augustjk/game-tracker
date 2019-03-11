@@ -8,7 +8,8 @@ module.exports = {
     publicPath: '/build/',
     proxy: {
       '/action': 'http://localhost:3000',
-      '/sidebar': 'http://localhost:3000'
+      '/sidebar': 'http://localhost:3000',
+      '/ws': 'http://localhost:3000'
     }
   },
   output: {
