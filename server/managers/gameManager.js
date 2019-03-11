@@ -1,3 +1,5 @@
+const { handleDBRequest } = require('../controllers/dbController');
+
 class GameManager {
   constructor() {
     this.activeGame = undefined;
@@ -90,6 +92,16 @@ class GameSession {
       Math.abs(p1Score - p2Score) >= 2
     ) {
       this.gameState.gameState = 2;
+      // need to add database logic here
+      // get the winner, add the winner to the database
+      // get the loser, add the loser to the database
+      const winner = this.getWinner();
+      const loser =
+        this.gameState.p1name === winner
+          ? this.gameState.p2name
+          : this.gameState.p1name;
+      handleDBRequest(winner, loser);
+
       return true;
     }
     return false;
