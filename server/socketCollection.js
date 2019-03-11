@@ -1,0 +1,3 @@
+socketCollection = [];
+
+module.exports = socketCollection;

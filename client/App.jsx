@@ -4,17 +4,24 @@ import SideContainer from './containers/SideContainer.jsx';
 
 import styles from './styles.css';
 
-export default class App extends Component {
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.ws = new WebSocket('ws://localhost:3000/ws');
+  }
+
   render() {
     return (
       <div className="app">
         <div className="front-container">
-          <FrontContainer />
+          <FrontContainer ws={this.ws} />
         </div>
         <div className="side-container">
-          <SideContainer />
+          <SideContainer ws={this.ws} />
         </div>
       </div>
     );
   }
 }
+
+export default  App;

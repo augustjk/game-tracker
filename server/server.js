@@ -1,9 +1,16 @@
 const express = require('express');
 const path = require('path');
 const app = express();
+const expressWs = require('express-ws')(app);
 const bodyParser = require('body-parser');
+const socketCollection = require('./socketCollection');
 
 const PORT = 3000;
+
+expressWs.getWss().on('connection', function(ws) {
+  console.log('connection open');
+  socketCollection.push(ws);
+});
 
 // import controllers
 const sidebarController = require('./controllers/sidebarController');
@@ -22,6 +29,13 @@ app.get('/sidebar', sidebarController.getData);
 
 app.post('/action', gameController.handleResponse);
 
+app.ws('/ws', (ws, req) => {
+  // ws.send('hello from server');
+})
+
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
 });
+
+
+module.exports = expressWs;
