@@ -1,4 +1,11 @@
 import React, { Component } from 'react';
+import { MDBContainer, MDBInput } from 'mdbreact';
+import {
+  InputGroup,
+  FormControl,
+  ButtonToolbar,
+  Button
+} from 'react-bootstrap';
 
 const QueueComponent = props => {
   return (
@@ -11,20 +18,28 @@ const QueueComponent = props => {
         </ol>
       </div>
       <div id="queue-input-wrapper">
-        <form onSubmit={props.enqueue}>
-          <input
+          <form id="queue-input-form" onSubmit={props.enqueue}>
+          <MDBInput
             type="text"
             value={props.queueInput}
-            placeholder="Enter Name"
+            label="Enter Name"
             onChange={props.queueOnChange}
+            autoComplete="off"
           />
-          <button id="join-queue" type="submit">
-            Submit
-          </button>
-        </form>
+          
+          <Button
+            variant="outline-primary"
+            id="join-queue"
+            onClick={props.enqueue}
+          >
+            Join Queue
+          </Button>
+          </form>
       </div>
     </div>
   );
 };
 
 export default QueueComponent;
+
+      
