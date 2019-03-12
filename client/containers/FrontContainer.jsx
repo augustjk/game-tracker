@@ -9,9 +9,9 @@ class FrontContainer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      p1name: 'Michael',
-      p2name: 'Augustine',
-      gameState: 0,
+      p1name: '',
+      p2name: '',
+      gameState: null,
       p1Score: [0],
       p2Score: [0],
       serving: [],
@@ -75,23 +75,25 @@ class FrontContainer extends Component {
   }
 
   startMatch() {
-    const body = {
-      action: 'START',
-      payload: {
-        p1name: this.state.p1name,
-        p2name: this.state.p2name,
-        maxScore: this.state.maxScore,
-        serving: this.state.serving
-      }
-    };
-    axios
-      .post('/action', body)
-      .then(res => {
-        if (res.status === 200) {
-          this.setState(res.data);
+    if (this.state.p1name && this.state.p2name && this.state.p1name !== this.state.p2name){
+      const body = {
+        action: 'START',
+        payload: {
+          p1name: this.state.p1name,
+          p2name: this.state.p2name,
+          maxScore: this.state.maxScore,
+          serving: this.state.serving
         }
-      })
-      .catch(err => console.error(err));
+      };
+      axios
+        .post('/action', body)
+        .then(res => {
+          if (res.status === 200) {
+            this.setState(res.data);
+          }
+        })
+        .catch(err => console.error(err));
+    }
   }
 
   handleScoreButton(e) {
