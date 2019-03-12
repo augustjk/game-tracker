@@ -264,4 +264,27 @@ th {
 #queue-wrapper {
   padding-top: 10px;
   padding-left: 30px;
+  font-weight: bold;
+  color: #ffd700;
+}
+
+#rematch,
+#winner-stay,
+#both-leave {
+  color: black;
+  text-align: center;
+}
+
+#end-buttons {
+  margin: 0 auto;
+}
+#queue-input-form {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+
+#queue-wrapper {
+  padding-top: 10px;
+  padding-left: 30px;
 }
