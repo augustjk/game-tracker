@@ -22,7 +22,7 @@ const NoGameContainer = props => {
               // placeholder="Enter Name"
               label="Enter Player 1 Name"
               onChange={props.setP1Name}
-              autocomplete="off"
+              autoComplete="off"
             />
             <MDBInput
               id="p2name"
@@ -32,7 +32,7 @@ const NoGameContainer = props => {
               // placeholder="Enter Name"
               label="Enter Player 2 Name"
               onChange={props.setP2Name}
-              autocomplete="off"
+              autoComplete="off"
             />
 
             <div id="radio-wrapper">
