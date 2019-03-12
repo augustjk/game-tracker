@@ -48,8 +48,21 @@ class SideContainer extends Component {
       })
       .catch(err => console.error(err));
 
-    this.props.ws.onmesage = e => {
+    // this.props.ws.onmesage = e => {
+    //   const parsed = JSON.parse(e.data);
+    //   console.log('parsed', parsed);
+    //   if (parsed.sidebar) {
+    //     // parsed = { sidebar: boolean , ranking: [], queue: []}
+    //     console.log(parsed);
+    //     // then setState of the queue and ranking
+    //     delete parsed.sidebar;
+    //     this.setState(parsed);
+    //   }
+    // };
+
+    this.props.ws.addEventListener('message', e => {
       const parsed = JSON.parse(e.data);
+      console.log('parsed', parsed);
       if (parsed.sidebar) {
         // parsed = { sidebar: boolean , ranking: [], queue: []}
         console.log(parsed);
@@ -57,7 +70,7 @@ class SideContainer extends Component {
         delete parsed.sidebar;
         this.setState(parsed);
       }
-    };
+    });
   }
 
   render() {
