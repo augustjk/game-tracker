@@ -12,7 +12,7 @@ class SideContainer extends Component {
       queue: [],
       ranking: [],
       queueInput: '',
-      key: 'queue'
+      key: 'ranking'
     };
     this.enqueue = this.enqueue.bind(this);
     this.queueOnChange = this.queueOnChange.bind(this);

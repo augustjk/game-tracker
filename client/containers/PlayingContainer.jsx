@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
 import { VictoryChart, VictoryLine, VictoryTheme, VictoryAxis } from 'victory';
+import {
+  InputGroup,
+  FormControl,
+  ButtonToolbar,
+  Button
+} from 'react-bootstrap';
 
 const PlayingContainer = props => {
   const { p1Score, p2Score } = props;
@@ -74,6 +80,31 @@ const PlayingContainer = props => {
         </VictoryChart>
       </div>
       <div id="button-wrapper">
+        <Button
+          variant="outline-primary"
+          id="inc-p1"
+          onClick={props.handleScoreButton}
+        >
+          +
+        </Button>
+
+        <Button
+          variant="outline-primary"
+          id="inc-p2"
+          onClick={props.handleScoreButton}
+        >
+          +
+        </Button>
+
+        <Button
+          variant="outline-primary"
+          id="undo"
+          onClick={props.handleScoreButton}
+        >
+          UNDO
+        </Button>
+      </div>
+      {/* <div id="button-wrapper">
         <button id="inc-p1" onClick={props.handleScoreButton}>
           +
         </button>
@@ -83,7 +114,7 @@ const PlayingContainer = props => {
         <button id="undo" onClick={props.handleScoreButton}>
           UNDO
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };
