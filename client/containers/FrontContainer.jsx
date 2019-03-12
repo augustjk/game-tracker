@@ -34,16 +34,10 @@ class FrontContainer extends Component {
         this.setState(res.data);
       })
       .catch(err => console.error(err));
-    
-    this.props.ws.onopen = () => {
-      console.log('ws connection open');
-    }
 
-    this.props.ws.onmessage = (e) => {
-      console.log('client message:', e.data);
+    this.props.ws.onmessage = e => {
       this.setState(JSON.parse(e.data));
-    }
-
+    };
   }
 
   setP1Name(e) {
@@ -75,7 +69,11 @@ class FrontContainer extends Component {
   }
 
   startMatch() {
-    if (this.state.p1name && this.state.p2name && this.state.p1name !== this.state.p2name){
+    if (
+      this.state.p1name &&
+      this.state.p2name &&
+      this.state.p1name !== this.state.p2name
+    ) {
       const body = {
         action: 'START',
         payload: {

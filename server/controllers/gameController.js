@@ -3,6 +3,7 @@ const PlayerQueue = require('../managers/queueManager');
 const action = require('../constants/actionTypes');
 const { defaultGameState } = require('../constants/defaults');
 const socketCollection = require('../socketCollection');
+const { getDBList } = require('./dbController');
 
 module.exports = {
   handleResponse: (req, res, next) => {
@@ -11,14 +12,14 @@ module.exports = {
       case action.GET_STATE: {
         const currentGame = GameManager.getGame();
         if (currentGame) {
-          socketCollection.forEach((ws)=>{
+          socketCollection.forEach(ws => {
             if (ws.readyState === 1) {
               ws.send(JSON.stringify(currentGame.gameState));
             }
           });
           res.json(currentGame.gameState);
         } else {
-          socketCollection.forEach((ws)=>{
+          socketCollection.forEach(ws => {
             if (ws.readyState === 1) {
               ws.send(JSON.stringify(defaultGameState));
             }
@@ -30,7 +31,7 @@ module.exports = {
       case action.START: {
         const initConfig = response.payload;
         const currentGame = GameManager.createGame(initConfig);
-        socketCollection.forEach((ws)=>{
+        socketCollection.forEach(ws => {
           if (ws.readyState === 1) {
             ws.send(JSON.stringify(currentGame.gameState));
           }
@@ -42,12 +43,12 @@ module.exports = {
         const currentGameState = GameManager.getGame().incrementScore(
           response.payload
         );
-        socketCollection.forEach((ws)=>{
+        socketCollection.forEach(ws => {
           if (ws.readyState === 1) {
             ws.send(JSON.stringify(currentGameState));
           }
         });
-        socketCollection.forEach((ws)=>{
+        socketCollection.forEach(ws => {
           if (ws.readyState === 1) {
             ws.send(JSON.stringify(currentGameState));
           }
@@ -57,7 +58,7 @@ module.exports = {
       }
       case action.UNDO: {
         const currentGameState = GameManager.getGame().undo(response.payload);
-        socketCollection.forEach((ws)=>{
+        socketCollection.forEach(ws => {
           if (ws.readyState === 1) {
             ws.send(JSON.stringify(currentGameState));
           }
@@ -76,11 +77,25 @@ module.exports = {
             p2name: PlayerQueue.dequeue() || ''
           };
           GameManager.getGame().setNewGameState(newState);
-          socketCollection.forEach((ws)=>{
+          socketCollection.forEach(ws => {
             if (ws.readyState === 1) {
               ws.send(JSON.stringify(newState));
             }
           });
+
+          getDBList().then(resp => {
+            const resBody = {
+              sidebar: true,
+              ranking: resp,
+              queue: PlayerQueue.getQueue()
+            };
+            socketCollection.forEach(ws => {
+              if (ws.readyState === 1) {
+                ws.send(JSON.stringify(resBody));
+              }
+            });
+          });
+
           res.json(newState);
         } else if (restartType === 1) {
           // winner stay
@@ -91,19 +106,45 @@ module.exports = {
             p2name: PlayerQueue.dequeue() || ''
           };
           GameManager.getGame().setNewGameState(newState);
-          socketCollection.forEach((ws)=>{
+          socketCollection.forEach(ws => {
             if (ws.readyState === 1) {
               ws.send(JSON.stringify(newState));
             }
+          });
+
+          getDBList().then(resp => {
+            const resBody = {
+              sidebar: true,
+              ranking: resp,
+              queue: PlayerQueue.getQueue()
+            };
+            socketCollection.forEach(ws => {
+              if (ws.readyState === 1) {
+                ws.send(JSON.stringify(resBody));
+              }
+            });
           });
           res.json(newState);
         } else {
           // rematch
           const restartedGameState = GameManager.getGame().restart();
-          socketCollection.forEach((ws)=>{
+          socketCollection.forEach(ws => {
             if (ws.readyState === 1) {
               ws.send(JSON.stringify(restartedGameState));
             }
+          });
+
+          getDBList().then(resp => {
+            const resBody = {
+              sidebar: true,
+              ranking: resp,
+              queue: PlayerQueue.getQueue()
+            };
+            socketCollection.forEach(ws => {
+              if (ws.readyState === 1) {
+                ws.send(JSON.stringify(resBody));
+              }
+            });
           });
           res.json(restartedGameState);
         }
@@ -111,12 +152,14 @@ module.exports = {
       }
       case action.ENQUEUE: {
         const newQueue = PlayerQueue.enqueue(response.payload);
-        socketCollection.forEach((ws)=>{
+        socketCollection.forEach(ws => {
           if (ws.readyState === 1) {
-            ws.send(JSON.stringify({
-              sidebar: true,
-              queue: newQueue
-            }));
+            ws.send(
+              JSON.stringify({
+                sidebar: true,
+                queue: newQueue
+              })
+            );
           }
         });
         res.json(newQueue);

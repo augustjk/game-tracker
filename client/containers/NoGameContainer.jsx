@@ -34,6 +34,7 @@ const NoGameContainer = props => {
               onChange={props.setP2Name}
               autoComplete="off"
             />
+
             <div id="radio-wrapper">
               <div className="radio">
                 <p id="match-point-text">Match Point</p>
